@@ -82,7 +82,30 @@ module.exports = {
       if (msg.attachments.size === 0) {
         msg.delete().catch(() => {});
         msg.channel.send(`${msg.author}, このチャンネルは画像専用です。`).then(m => setTimeout(() => m.delete(), 5000));
+  // events/messageCreate.jsの既存のコードの下に追加
+
+// しりとりゲーム処理
+if (client.wordchainGame && client.wordchainGame.isActive && msg.channel.id === client.wordchainGame.channelId) {
+    const lastChar = client.wordchainGame.lastWord.slice(-1);
+    const firstChar = msg.content.slice(0, 1);
+    const isKana = (char) => /[ぁ-んァ-ン]/.test(char);
+
+    if (msg.content.includes('ん')) {
+        client.wordchainGame.isActive = false;
+        msg.reply(`「ん」で終わりました。あなたの負けです！\nゲームを終了します。`);
+        return;
+    }
+
+    if (isKana(lastChar) && firstChar !== lastChar) {
+        return msg.reply(`⚠️ 前の言葉「**${client.wordchainGame.lastWord}**」の最後の文字は「**${lastChar}**」です。`)
+            .then(m => setTimeout(() => m.delete(), 5000));
+    }
+
+    client.wordchainGame.lastWord = msg.content;
+    msg.react('✅').catch(() => {});
+}
       }
     }
   },
+
 };
