@@ -14,7 +14,7 @@ module.exports = {
         .setRequired(false)),
   async execute(interaction) {
     if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-      return interaction.reply({ content: 'BAN権限がありません。', ephemeral: true });
+      return interaction.reply({ content: 'BAN権限がありません。', flags: 64 });
     }
 
     const targetUser = interaction.options.getUser('target');
@@ -22,14 +22,14 @@ module.exports = {
     const member = interaction.guild.members.cache.get(targetUser.id);
 
     if (!member) {
-      return interaction.reply({ content: 'ユーザーが見つかりませんでした。', ephemeral: true });
+      return interaction.reply({ content: 'ユーザーが見つかりませんでした。', flags: 64 });
     }
 
     if (!member.bannable) {
-      return interaction.reply({ content: 'このユーザーはBANできません。', ephemeral: true });
+      return interaction.reply({ content: 'このユーザーはBANできません。', flags: 64 });
     }
 
     await member.ban({ reason });
-    await interaction.reply({ content: `${targetUser.tag} をBANしました。\n理由: ${reason}`, ephemeral: false });
+    await interaction.reply({ content: `${targetUser.tag} をBANしました。\n理由: ${reason}`, flags: 0 });
   },
 };
