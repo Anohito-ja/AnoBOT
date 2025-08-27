@@ -22,7 +22,7 @@ module.exports = {
             .setRequired(true))),
   async execute(interaction, client) {
     if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
-      return interaction.reply({ content: '管理者権限が必要です。', ephemeral: true });
+      return interaction.reply({ content: '管理者権限が必要です。', flags: 64 });
     }
 
     const subcommand = interaction.options.getSubcommand();
@@ -30,19 +30,19 @@ module.exports = {
 
     if (subcommand === 'add') {
       if (client.bannedWords.includes(word)) {
-        return interaction.reply({ content: `🚫 「${word}」は既に禁止ワードリストに存在します。`, ephemeral: true });
+        return interaction.reply({ content: `🚫 「${word}」は既に禁止ワードリストに存在します。`, flags: 64 });
       }
       client.bannedWords.push(word);
       client.saveData('bannedWords');
-      await interaction.reply({ content: `🚫 禁止ワード「${word}」を追加しました。`, ephemeral: false });
+      await interaction.reply({ content: `🚫 禁止ワード「${word}」を追加しました。`, flags: 0 });
     } else if (subcommand === 'remove') {
       const index = client.bannedWords.indexOf(word);
       if (index > -1) {
         client.bannedWords.splice(index, 1);
         client.saveData('bannedWords');
-        await interaction.reply({ content: `✅ 「${word}」を禁止リストから削除しました。`, ephemeral: false });
+        await interaction.reply({ content: `✅ 「${word}」を禁止リストから削除しました。`, flags: 0 });
       } else {
-        await interaction.reply({ content: `✅ 「${word}」は禁止リストに存在しませんでした。`, ephemeral: true });
+        await interaction.reply({ content: `✅ 「${word}」は禁止リストに存在しませんでした。`, flags: 64 });
       }
     }
   },
