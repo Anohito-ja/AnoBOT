@@ -18,13 +18,13 @@ module.exports = {
         )),
   async execute(interaction, client) {
     if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
-      return interaction.reply({ content: '管理者権限が必要です。', ephemeral: true });
+      return interaction.reply({ content: '管理者権限が必要です。', flags: 64 });
     }
-    
+
     const channelId = interaction.options.getChannel('channel').id;
     const type = interaction.options.getString('type');
     let message = '';
-    
+
     if (type === 'image') {
       const index = client.settings.imageChannels.indexOf(channelId);
       if (index > -1) {
@@ -44,7 +44,7 @@ module.exports = {
         message = 'このチャンネルはリンク禁止チャンネルではありません。';
       }
     }
-    
-    await interaction.reply({ content: `✅ ${message}`, ephemeral: false });
+
+    await interaction.reply({ content: `✅ ${message}`, flags: 0 });
   },
 };
