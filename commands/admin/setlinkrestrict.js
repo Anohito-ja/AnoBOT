@@ -10,16 +10,16 @@ module.exports = {
         .setRequired(true)),
   async execute(interaction, client) {
     if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
-      return interaction.reply({ content: '管理者権限が必要です。', ephemeral: true });
+      return interaction.reply({ content: '管理者権限が必要です。', flags: 64 });
     }
-    
+
     const channel = interaction.options.getChannel('channel');
     if (!client.settings.linkRestrictChannels.includes(channel.id)) {
       client.settings.linkRestrictChannels.push(channel.id);
       client.saveData('settings');
-      await interaction.reply({ content: `✅ ${channel.name} をリンク禁止チャンネルに設定しました。`, ephemeral: false });
+      await interaction.reply({ content: `✅ ${channel.name} をリンク禁止チャンネルに設定しました。`, flags: 0 });
     } else {
-      await interaction.reply({ content: `🚫 ${channel.name} はすでにリンク禁止チャンネルです。`, ephemeral: true });
+      await interaction.reply({ content: `🚫 ${channel.name} はすでにリンク禁止チャンネルです。`, flags: 64 });
     }
   },
 };
