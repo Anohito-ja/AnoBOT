@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder, EmbedBuilder, Events } = require('discord.js');
 
 module.exports = {
@@ -115,7 +114,7 @@ function getBotWord(lastWord, usedWords) {
   const lastChar = lastWord.slice(-1);
   const availableWords = botWords.filter(word => word.startsWith(lastChar) && !usedWords.has(word));
   return availableWords[0] || null;
-=======
+
 const { SlashCommandBuilder, EmbedBuilder, Events } = require('discord.js');
 
 module.exports = {
@@ -232,5 +231,4 @@ function getBotWord(lastWord, usedWords) {
   const lastChar = lastWord.slice(-1);
   const availableWords = botWords.filter(word => word.startsWith(lastChar) && !usedWords.has(word));
   return availableWords[0] || null;
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 }

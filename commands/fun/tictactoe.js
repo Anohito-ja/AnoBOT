@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -146,7 +145,7 @@ function getBotMove(board) {
   // それ以外はランダムな空いているマスを選ぶ
   const emptyCells = board.map((cell, i) => cell === null ? i : null).filter(val => val !== null);
   return emptyCells[Math.floor(Math.random() * emptyCells.length)] || -1;
-=======
+
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -294,5 +293,4 @@ function getBotMove(board) {
   // それ以外はランダムな空いているマスを選ぶ
   const emptyCells = board.map((cell, i) => cell === null ? i : null).filter(val => val !== null);
   return emptyCells[Math.floor(Math.random() * emptyCells.length)] || -1;
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 }

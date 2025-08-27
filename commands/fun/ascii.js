@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder } = require('discord.js');
 const figlet = require('figlet');
 
@@ -31,7 +30,7 @@ module.exports = {
       interaction.reply({ content: `\`\`\`\n${data}\n\`\`\`` });
     });
   },
-=======
+
 const { SlashCommandBuilder } = require('discord.js');
 const figlet = require('figlet');
 
@@ -64,5 +63,4 @@ module.exports = {
       interaction.reply({ content: `\`\`\`\n${data}\n\`\`\`` });
     });
   },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };

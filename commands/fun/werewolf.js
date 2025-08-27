@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
@@ -349,7 +348,7 @@ async function checkGameEnd(interaction, client) {
     client.werewolfGame.isActive = false;
     client.werewolfGame = null;
   }
-=======
+
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
@@ -700,5 +699,4 @@ async function checkGameEnd(interaction, client) {
     client.werewolfGame.isActive = false;
     client.werewolfGame = null;
   }
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 }

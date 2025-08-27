@@ -32,8 +32,5 @@ module.exports = {
 
     await interaction.reply({ embeds: [userInfoEmbed] });
   },
-<<<<<<< HEAD
 };
-=======
 };
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739

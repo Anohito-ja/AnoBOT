@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 require("dotenv").config();
 const express = require("express");
 const { Client, GatewayIntentBits, Partials, Events, PermissionsBitField, Collection, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
@@ -208,7 +207,7 @@ client.login(process.env.DISCORD_TOKEN);
 
 // --- ヘルパー関数群 (省略) ---
 // ...
-=======
+
 require("dotenv").config();
 const fs = require("fs-extra");
 const path = require("path");
@@ -298,4 +297,3 @@ for (const file of eventFiles) {
 }
 
 client.login(process.env.DISCORD_TOKEN);
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739

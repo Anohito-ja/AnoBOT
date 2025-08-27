@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js');
 
 module.exports = {
@@ -26,7 +25,7 @@ module.exports = {
 
     await interaction.reply({ embeds: [embed] });
   },
-=======
+
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js');
 
 module.exports = {
@@ -54,5 +53,4 @@ module.exports = {
 
     await interaction.reply({ embeds: [embed] });
   },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };

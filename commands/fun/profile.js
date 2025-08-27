@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -29,7 +28,7 @@ module.exports = {
 
     await interaction.reply({ embeds: [profileEmbed] });
   },
-=======
+
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -60,5 +59,4 @@ module.exports = {
 
     await interaction.reply({ embeds: [profileEmbed] });
   },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };

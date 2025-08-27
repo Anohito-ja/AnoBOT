@@ -32,8 +32,4 @@ module.exports = {
     await member.ban({ reason });
     await interaction.reply({ content: `${targetUser.tag} をBANしました。\n理由: ${reason}`, ephemeral: false });
   },
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739

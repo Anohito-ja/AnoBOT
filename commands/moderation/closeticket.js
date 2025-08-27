@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 
 module.exports = {
@@ -23,7 +22,7 @@ module.exports = {
       creator.send('あなたのチケットが閉じられました。ありがとうございました。').catch(console.error);
     }
   },
-=======
+
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 
 module.exports = {
@@ -48,5 +47,4 @@ module.exports = {
       creator.send('あなたのチケットが閉じられました。ありがとうございました。').catch(console.error);
     }
   },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };

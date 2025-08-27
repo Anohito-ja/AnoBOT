@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 
 module.exports = {
@@ -22,7 +21,7 @@ module.exports = {
     await interaction.channel.bulkDelete(amount, true);
     await interaction.reply({ content: `${amount} 件のメッセージを削除しました。`, ephemeral: true });
   },
-=======
+
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 
 module.exports = {
@@ -46,5 +45,4 @@ module.exports = {
     await interaction.channel.bulkDelete(amount, true);
     await interaction.reply({ content: `${amount} 件のメッセージを削除しました。`, ephemeral: true });
   },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -19,7 +18,7 @@ module.exports = {
       await interaction.reply({ content: `${targetUser.tag} の現在の警告数は **${warningCount}** 回です。`, ephemeral: false });
     }
   },
-=======
+
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -40,5 +39,4 @@ module.exports = {
       await interaction.reply({ content: `${targetUser.tag} の現在の警告数は **${warningCount}** 回です。`, ephemeral: false });
     }
   },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };

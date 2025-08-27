@@ -3,7 +3,6 @@ const { SlashCommandBuilder, ChannelType, PermissionsBitField, EmbedBuilder } = 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('ticket')
-<<<<<<< HEAD
     .setDescription('プライベートなチケットチャンネルを管理します。')
     .addSubcommand(subcommand =>
       subcommand
@@ -74,7 +73,7 @@ module.exports = {
     }
   },
 };
-=======
+
     .setDescription('新しいサポートチケットを作成します。'),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
@@ -125,4 +124,3 @@ module.exports = {
     await interaction.followUp({ content: `チケットを作成しました: <#${channel.id}>`, ephemeral: true });
   },
 };
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739

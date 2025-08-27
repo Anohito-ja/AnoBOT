@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -9,7 +8,7 @@ module.exports = {
     const diceRoll = Math.floor(Math.random() * 6) + 1;
     await interaction.reply(`🎲 あなたのサイコロは **${diceRoll}** です！`);
   },
-=======
+
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -20,5 +19,4 @@ module.exports = {
     const diceRoll = Math.floor(Math.random() * 6) + 1;
     await interaction.reply(`🎲 あなたのサイコロは **${diceRoll}** です！`);
   },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };

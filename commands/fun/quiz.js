@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -28,7 +27,7 @@ module.exports = {
       await interaction.followUp(`時間切れです！正解は「${quiz.answer}」でした！`);
     }
   },
-=======
+
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -58,5 +57,4 @@ module.exports = {
       await interaction.followUp(`時間切れです！正解は「${quiz.answer}」でした！`);
     }
   },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -22,7 +21,7 @@ module.exports = {
     
     await interaction.reply({ content: `✅ クイズを追加しました。\n質問: ${question}\n答え: ${answer}`, ephemeral: true });
   },
-=======
+
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -46,5 +45,4 @@ module.exports = {
     
     await interaction.reply({ content: `✅ クイズを追加しました。\n質問: ${question}\n答え: ${answer}`, ephemeral: true });
   },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };

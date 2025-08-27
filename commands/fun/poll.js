@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -37,7 +36,7 @@ module.exports = {
       await reply.react(emojiList[i]);
     }
   },
-=======
+
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -76,5 +75,4 @@ module.exports = {
       await reply.react(emojiList[i]);
     }
   },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };

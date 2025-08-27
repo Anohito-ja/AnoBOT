@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require('discord.js');
 
 module.exports = {
@@ -31,7 +30,7 @@ module.exports = {
     await interaction.channel.send({ content: message, components: [row] });
     await interaction.reply({ content: 'リアクションロールメッセージを作成しました。', ephemeral: true });
   },
-=======
+
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require('discord.js');
 
 module.exports = {
@@ -64,5 +63,4 @@ module.exports = {
     await interaction.channel.send({ content: message, components: [row] });
     await interaction.reply({ content: 'リアクションロールメッセージを作成しました。', ephemeral: true });
   },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };
