@@ -1,46 +1,33 @@
-<<<<<<< HEAD
 const { Events, EmbedBuilder } = require('discord.js');
 
 module.exports = {
   name: Events.MessageDelete,
-  async execute(message, client) {
-    if (message.author.bot || !client.settings.logChannel) return;
+  async execute(message) {
+    if (message.author.bot) return;
 
-    const logChannel = message.guild.channels.cache.get(client.settings.logChannel);
-    if (!logChannel) return;
+    const client = message.client;
+    const logChannelId = client.settings.logChannel;
 
-    const deleteEmbed = new EmbedBuilder()
-      .setColor(0xffa500)
-      .setTitle('🗑️ メッセージ削除')
-      .setDescription(`**チャンネル**: ${message.channel}\n**ユーザー**: ${message.author.tag}`)
-      .addFields(
-        { name: '内容', value: message.content || '添付ファイル' }
-      )
-      .setTimestamp();
-      
-    logChannel.send({ embeds: [deleteEmbed] });
+    if (!logChannelId) return;
+
+    try {
+      const logChannel = await client.channels.fetch(logChannelId);
+      if (!logChannel) return;
+
+      const embed = new EmbedBuilder()
+        .setColor(0xeb4034)
+        .setTitle('メッセージが削除されました')
+        .setDescription(`**${message.author.tag}** のメッセージが削除されました。`)
+        .addFields(
+          { name: 'チャンネル', value: `<#${message.channel.id}>`, inline: true },
+          { name: 'ユーザーID', value: message.author.id, inline: true },
+          { name: 'メッセージ内容', value: message.content ? message.content.slice(0, 1024) : '内容がありません', inline: false }
+        )
+        .setTimestamp();
+
+      await logChannel.send({ embeds: [embed] });
+    } catch (error) {
+      console.error('Error sending message delete log:', error);
+    }
   },
-=======
-const { Events, EmbedBuilder } = require('discord.js');
-
-module.exports = {
-  name: Events.MessageDelete,
-  async execute(message, client) {
-    if (message.author.bot || !client.settings.logChannel) return;
-
-    const logChannel = message.guild.channels.cache.get(client.settings.logChannel);
-    if (!logChannel) return;
-
-    const deleteEmbed = new EmbedBuilder()
-      .setColor(0xffa500)
-      .setTitle('🗑️ メッセージ削除')
-      .setDescription(`**チャンネル**: ${message.channel}\n**ユーザー**: ${message.author.tag}`)
-      .addFields(
-        { name: '内容', value: message.content || '添付ファイル' }
-      )
-      .setTimestamp();
-      
-    logChannel.send({ embeds: [deleteEmbed] });
-  },
->>>>>>> 847512c7e09a4c27175b8ed36990db4821422739
 };
