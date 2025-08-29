@@ -10,12 +10,12 @@ module.exports = {
         .setRequired(true)),
   async execute(interaction, client) {
     if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
-      return interaction.reply({ content: '管理者権限が必要です。', flags: 64 });
+      return interaction.reply({ content: '管理者権限が必要です。', ephemeral: true });
     }
 
     const channel = interaction.options.getChannel('channel');
     client.settings.logChannel = channel.id;
     client.saveData('settings');
-    await interaction.reply({ content: `✅ ログチャンネルを ${channel} に設定しました。`, flags: 0 });
+    await interaction.reply({ content: `✅ ログチャンネルを ${channel} に設定しました。`, ephemeral: false });
   },
 };
