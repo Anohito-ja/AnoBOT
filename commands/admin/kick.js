@@ -14,7 +14,7 @@ module.exports = {
         .setRequired(false)),
   async execute(interaction) {
     if (!interaction.member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
-      return interaction.reply({ content: 'キック権限がありません。', flags: 64 });
+      return interaction.reply({ content: 'キック権限がありません。', ephemeral: true });
     }
 
     const targetUser = interaction.options.getUser('target');
@@ -22,14 +22,14 @@ module.exports = {
     const member = interaction.guild.members.cache.get(targetUser.id);
 
     if (!member) {
-      return interaction.reply({ content: 'ユーザーが見つかりませんでした。', flags: 64 });
+      return interaction.reply({ content: 'ユーザーが見つかりませんでした。', ephemeral: true });
     }
 
     if (!member.kickable) {
-      return interaction.reply({ content: 'このユーザーはキックできません。', flags: 64 });
+      return interaction.reply({ content: 'このユーザーはキックできません。', ephemeral: true });
     }
 
     await member.kick({ reason });
-    await interaction.reply({ content: `${targetUser.tag} をキックしました。\n理由: ${reason}`, flags: 0 });
+    await interaction.reply({ content: `${targetUser.tag} をキックしました。\n理由: ${reason}`, ephemeral: false });
   },
 };
