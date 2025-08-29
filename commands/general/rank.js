@@ -1,54 +1,34 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const fs = require('fs-extra');
+const path = require('path');
+
+const xpFile = path.join(__dirname, '../../data/xp.json');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('rank')
-    .setDescription('発言数（XP）のランキングを表示します。'),
-  async execute(interaction, client) {
-    const sortedXP = Object.entries(client.xp).sort(([, xpA], [, xpB]) => xpB - xpA);
+    .setDescription('あなたのランクと経験値を表示します。'),
+  async execute(interaction) {
+    const xpData = fs.readJsonSync(xpFile, { throws: false }) || {};
+    const user = interaction.user;
+    const userXP = xpData[user.id] || { xp: 0, level: 0 };
     
-    if (sortedXP.length === 0) {
-      return interaction.reply('まだ誰も発言していません。');
-    }
-    
-    const top5 = sortedXP.slice(0, 5);
-    const rankList = top5.map(([userId, xp], index) => {
-      const user = client.users.cache.get(userId);
-      return `${index + 1}. ${user ? user.tag : '不明なユーザー'} - XP: ${xp}`;
-    }).join('\n');
-    
-    const rankEmbed = new EmbedBuilder()
-      .setTitle('🏆 発言数ランキング')
-      .setDescription(rankList)
-      .setColor(0xffa500);
-      
-    await interaction.reply({ embeds: [rankEmbed] });
-  },
+    // 現在のレベルと次のレベルに必要なXPを計算
+    const currentLevel = userXP.level;
+    const requiredXP = 5 * Math.pow(currentLevel, 2) + 50 * currentLevel + 100;
+    const xpDifference = requiredXP - userXP.xp;
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-
-module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('rank')
-    .setDescription('発言数（XP）のランキングを表示します。'),
-  async execute(interaction, client) {
-    const sortedXP = Object.entries(client.xp).sort(([, xpA], [, xpB]) => xpB - xpA);
-    
-    if (sortedXP.length === 0) {
-      return interaction.reply('まだ誰も発言していません。');
-    }
-    
-    const top5 = sortedXP.slice(0, 5);
-    const rankList = top5.map(([userId, xp], index) => {
-      const user = client.users.cache.get(userId);
-      return `${index + 1}. ${user ? user.tag : '不明なユーザー'} - XP: ${xp}`;
-    }).join('\n');
-    
     const rankEmbed = new EmbedBuilder()
-      .setTitle('🏆 発言数ランキング')
-      .setDescription(rankList)
-      .setColor(0xffa500);
-      
-    await interaction.reply({ embeds: [rankEmbed] });
+      .setColor(0x0099ff)
+      .setTitle(`${user.username}のランク`)
+      .setThumbnail(user.displayAvatarURL({ dynamic: true }))
+      .addFields(
+        { name: '現在のレベル', value: `\`${currentLevel}\``, inline: true },
+        { name: '現在のXP', value: `\`${userXP.xp}\``, inline: true },
+        { name: '次のレベルまで', value: `\`${xpDifference}\` XP` }
+      )
+      .setFooter({ text: '会話することで経験値がたまります。' });
+
+    await interaction.reply({ embeds: [rankEmbed], ephemeral: false });
   },
 };
