@@ -14,7 +14,7 @@ module.exports = {
         .setRequired(false)),
   async execute(interaction, client) {
     if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-      return interaction.reply({ content: 'BAN権限以上のユーザーのみ警告を与えられます。', flags: 64 });
+      return interaction.reply({ content: 'BAN権限以上のユーザーのみ警告を与えられます。', ephemeral: true });
     }
 
     const targetUser = interaction.options.getUser('target');
@@ -25,7 +25,7 @@ module.exports = {
 
     await interaction.reply({
       content: `${targetUser.tag} に警告を与えました。\n理由: ${reason}\n現在の警告数: ${client.warnings[targetUser.id]}`,
-      flags: 0
+      ephemeral: false
     });
   },
 };
