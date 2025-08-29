@@ -7,27 +7,30 @@ module.exports = {
     .setName('help')
     .setDescription('利用可能なコマンドを一覧表示します。'),
   async execute(interaction) {
-    const commandsPath = path.join(path.resolve(), 'commands');
+    const commandsPath = path.join(__dirname, '..');
     const commandFolders = fs.readdirSync(commandsPath);
 
     const helpEmbed = new EmbedBuilder()
       .setColor(0x0099ff)
-      .setTitle('📚 コマンドヘルプ')
-      .setDescription('利用可能なコマンドとそれぞれの説明です。');
+      .setTitle('Botのコマンドリスト')
+      .setDescription('利用可能なすべてのスラッシュコマンドです。');
 
     for (const folder of commandFolders) {
-      const commandsInFolder = fs.readdirSync(path.join(commandsPath, folder)).filter(file => file.endsWith('.js'));
-      const commandList = commandsInFolder.map(file => {
-        const command = require(path.join(commandsPath, folder, file));
-        if (command.data) {
-          return `\`/${command.data.name}\`: ${command.data.description}`;
+      const folderPath = path.join(commandsPath, folder);
+      const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
+      const commandList = [];
+
+      for (const file of commandFiles) {
+        const filePath = path.join(folderPath, file);
+        const command = require(filePath);
+        if ('data' in command && 'execute' in command) {
+          commandList.push(`\`/${command.data.name}\`: ${command.data.description}`);
         }
-        return null;
-      }).filter(Boolean);
+      }
 
       if (commandList.length > 0) {
         helpEmbed.addFields({
-          name: `**${folder.charAt(0).toUpperCase() + folder.slice(1)}**`,
+          name: `__${folder.charAt(0).toUpperCase() + folder.slice(1)}__`,
           value: commandList.join('\n')
         });
       }
