@@ -3,59 +3,36 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('profile')
-    .setDescription('あなたのプロフィールカードを表示します。')
+    .setDescription('ユーザーのプロフィール情報を表示します。')
     .addUserOption(option =>
       option.setName('user')
         .setDescription('プロフィールを表示するユーザー')
         .setRequired(false)),
-  async execute(interaction, client) {
+  async execute(interaction) {
     const targetUser = interaction.options.getUser('user') || interaction.user;
+    const member = interaction.guild.members.cache.get(targetUser.id);
 
-    const userXp = client.data.xp[targetUser.id] || 0;
-    const userWarnings = client.data.warnings[targetUser.id] || 0;
+    if (!member) {
+      return interaction.reply({ content: 'このサーバーでユーザーが見つかりませんでした。', ephemeral: true });
+    }
+
+    const roles = member.roles.cache
+      .filter(role => role.name !== '@everyone')
+      .map(role => `<@&${role.id}>`)
+      .join(', ');
 
     const profileEmbed = new EmbedBuilder()
-      .setColor(0x0099ff)
-      .setTitle(`${targetUser.username} のプロフィール`)
+      .setColor(member.displayHexColor || 0x0099ff)
+      .setTitle(`${targetUser.username}のプロフィール`)
       .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
       .addFields(
-        { name: 'XP (発言数)', value: `${userXp}`, inline: true },
-        { name: '警告回数', value: `${userWarnings}`, inline: true },
-        { name: '参加日', value: `<t:${Math.floor(targetUser.joinedTimestamp / 1000)}:R>`, inline: true }
+        { name: 'ユーザー', value: `<@${targetUser.id}>`, inline: true },
+        { name: 'ユーザーID', value: targetUser.id, inline: true },
+        { name: 'Discord参加日', value: `<t:${Math.floor(targetUser.createdAt.getTime() / 1000)}:f>`, inline: true },
+        { name: 'サーバー参加日', value: `<t:${Math.floor(member.joinedAt.getTime() / 1000)}:f>`, inline: true },
+        { name: 'ロール', value: roles.length > 0 ? roles : 'なし' },
       )
-      .setFooter({ text: `ID: ${targetUser.id}` })
-      .setTimestamp();
-
-    await interaction.reply({ embeds: [profileEmbed] });
-  },
-
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-
-module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('profile')
-    .setDescription('あなたのプロフィールカードを表示します。')
-    .addUserOption(option =>
-      option.setName('user')
-        .setDescription('プロフィールを表示するユーザー')
-        .setRequired(false)),
-  async execute(interaction, client) {
-    const targetUser = interaction.options.getUser('user') || interaction.user;
-
-    const userXp = client.data.xp[targetUser.id] || 0;
-    const userWarnings = client.data.warnings[targetUser.id] || 0;
-
-    const profileEmbed = new EmbedBuilder()
-      .setColor(0x0099ff)
-      .setTitle(`${targetUser.username} のプロフィール`)
-      .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
-      .addFields(
-        { name: 'XP (発言数)', value: `${userXp}`, inline: true },
-        { name: '警告回数', value: `${userWarnings}`, inline: true },
-        { name: '参加日', value: `<t:${Math.floor(targetUser.joinedTimestamp / 1000)}:R>`, inline: true }
-      )
-      .setFooter({ text: `ID: ${targetUser.id}` })
-      .setTimestamp();
+      .setFooter({ text: `最終更新: ${new Date().toLocaleDateString('ja-JP')}` });
 
     await interaction.reply({ embeds: [profileEmbed] });
   },
