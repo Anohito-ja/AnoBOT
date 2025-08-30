@@ -41,7 +41,7 @@ module.exports = {
       .setCustomId('werewolf_start')
       .setLabel('ゲーム開始')
       .setStyle(ButtonStyle.Success)
-      .setDisabled(true);
+      .setDisabled(false);
 
     const row = new ActionRowBuilder().addComponents(joinButton, startButton);
     
