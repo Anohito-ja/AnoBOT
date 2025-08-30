@@ -38,10 +38,10 @@ module.exports = {
       .setStyle(ButtonStyle.Primary);
     
     const startButton = new ButtonBuilder()
-      .setCustomId('werewolf_start')
-      .setLabel('ゲーム開始')
-      .setStyle(ButtonStyle.Success)
-      .setDisabled(true);
+  .setCustomId('werewolf_start')
+  .setLabel('ゲーム開始')
+  .setStyle(ButtonStyle.Success)
+  .setDisabled(false); // ✅ ここを`false`に変更
 
     const row = new ActionRowBuilder().addComponents(joinButton, startButton);
     
