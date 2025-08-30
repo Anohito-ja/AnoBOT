@@ -24,7 +24,7 @@ module.exports = {
     
     // ゲームの準備
     gameState.isGameRunning = true;
-    gameState.players.set(interaction.user.id, { id: interaction.user.id, role: null });
+    gameState.players.set(interaction.user.id, { id: interaction.user.id, role: null, username: interaction.user.username });
 
     const joinEmbed = new EmbedBuilder()
       .setColor(0x0099ff)
@@ -41,7 +41,7 @@ module.exports = {
       .setCustomId('werewolf_start')
       .setLabel('ゲーム開始')
       .setStyle(ButtonStyle.Success)
-      .setDisabled(false);
+      .setDisabled(true);
 
     const row = new ActionRowBuilder().addComponents(joinButton, startButton);
     
@@ -56,7 +56,7 @@ module.exports = {
     collector.on('collect', async i => {
       if (i.customId === 'werewolf_join') {
         if (!gameState.players.has(i.user.id)) {
-          gameState.players.set(i.user.id, { id: i.user.id, role: null });
+          gameState.players.set(i.user.id, { id: i.user.id, role: null, username: i.user.username });
           await i.reply({ content: `<@${i.user.id}>さんがゲームに参加しました！`, ephemeral: true });
           
           if (gameState.players.size >= 3) {
@@ -82,18 +82,36 @@ module.exports = {
 
     collector.on('end', async (collected, reason) => {
       if (reason === 'started') {
+        // プレイヤーが2人以下の場合、テスト用にダミープレイヤーを追加
+        if (gameState.players.size < 3) {
+            console.log('テスト用にダミープレイヤーを追加します。');
+            gameState.players.set('dummy1', { id: 'dummy1', role: null, username: 'ダミープレイヤー1' });
+            gameState.players.set('dummy2', { id: 'dummy2', role: null, username: 'ダミープレイヤー2' });
+        }
+        
         // 役割を割り当て、ゲームを開始
         const playerArray = Array.from(gameState.players.values());
         const shuffledRoles = gameState.roles.slice().sort(() => 0.5 - Math.random());
         
         playerArray.forEach((player, index) => {
           player.role = shuffledRoles[index % shuffledRoles.length];
-          // DMで役割を通知
-          interaction.client.users.fetch(player.id).then(user => {
-            user.send(`あなたの役割は「**${player.role}**」です。`);
-          });
+          // DMで役割を通知（ダミープレイヤーは通知しない）
+          if (!player.id.startsWith('dummy')) {
+              interaction.client.users.fetch(player.id).then(user => {
+                user.send(`あなたの役割は「**${player.role}**」です。`);
+              });
+          }
         });
         
+        // 参加者リストを表示
+        const participantsList = playerArray.map(p => `- ${p.username}`).join('\n');
+        const participantsEmbed = new EmbedBuilder()
+          .setColor(0x00ff00)
+          .setTitle('参加者リスト')
+          .setDescription(participantsList);
+          
+        await interaction.followUp({ embeds: [participantsEmbed] });
+
         // 最初の夜のフェーズへ
         startNightPhase(interaction, gameState);
         
@@ -122,12 +140,15 @@ async function startNightPhase(interaction, gameState) {
 
   await interaction.followUp({ embeds: [nightEmbed] });
 
-  // 夜のアクションを収集するためのロジックをここに実装
+  // ここに夜のアクションを収集するためのロジックを実装
   // 例: 人狼にDMで村人を襲撃するよう促す
   // 例: 占い師にDMで占う相手を選ぶよう促す
 
-  // 夜の行動が完了した後に、昼のフェーズに移行
-  // startDayPhase(interaction, gameState);
+  // テスト用: 5秒後に昼のフェーズに移行
+  console.log('テスト: 5秒後に昼のフェーズに移行します。');
+  setTimeout(() => {
+    startDayPhase(interaction, gameState);
+  }, 5000);
 }
 
 /**
