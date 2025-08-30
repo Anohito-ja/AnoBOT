@@ -152,6 +152,7 @@ async function startDayPhase(interaction, gameState) {
 
 /**
  * 勝利条件をチェックする関数
+ * @param {object} interaction - Discordインタラクションオブジェクト
  * @param {object} gameState - ゲームの状態オブジェクト
  */
 function checkWinCondition(gameState) {
